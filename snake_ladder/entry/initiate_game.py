@@ -3,7 +3,9 @@ from snake_ladder.controllers.play_game import GameController
 from snake_ladder.domain_models.player import Player
 from faker import Faker
 from collections import deque
+from itertools import chain
 Faker.seed(4321)
+from collections import OrderedDict
 
 
 class GameSetup:
@@ -36,14 +38,14 @@ class GameSetup:
                        mobile_number=self._fake.phone_number()
                        )
             _player_queue.append(p)
-        
+
         return _player_queue
 
     def start_game(self, game_id, player_queue):
 
         if len(player_queue) <= 0:
             raise Exception('Player list is empty')
-        
+
         turn_num = 1
         num_of_players = len(player_queue)
         sides_in_a_turn = 0
@@ -51,26 +53,52 @@ class GameSetup:
             sides_in_a_turn += 1
             player = player_queue.popleft()
             player = self._game_controller.play_game(player, turn_num)
-            
+
             if player.is_winner == True:
 
-                player.min_amount_of_climb = min(player.climb_amount_history) if len(player.climb_amount_history) else 0
-                player.max_amount_of_climb = max(player.climb_amount_history) if len(player.climb_amount_history) else 0
+                player_climbs_amts = list(chain.from_iterable(d.items()
+                                 for d in player.climb_amount_history))
+                player_climbs_amts = [x[1] for x in player_climbs_amts]
+                player_climbs_amts = list(chain.from_iterable(player_climbs_amts))
+                player.min_amount_of_climb = min(player_climbs_amts) if len(
+                    player_climbs_amts) > 0 else 0
+                player.max_amount_of_climb = max(player_climbs_amts) if len(
+                    player_climbs_amts) > 0 else 0
                 player.avg_amount_of_climb = sum(
-                    player.climb_amount_history) / len(player.climb_amount_history) if player.max_amount_of_climb!=0 else 0
+                    player_climbs_amts) / len(player_climbs_amts) if sum(player_climbs_amts) != 0 else 0
 
-                player.min_amount_of_slide = min(player.slide_amount_history) if len(player.slide_amount_history) > 1 else 0
-                player.max_amount_of_slide = max(player.slide_amount_history) if len(player.slide_amount_history) > 1 else 0
+
+                player_slide_amts = list(chain.from_iterable(d.items()
+                                 for d in player.slide_amount_history))
+                player_slide_amts = [x[1] for x in player_slide_amts]
+                player_slide_amts = list(chain.from_iterable(player_slide_amts))
+                player.min_amount_of_slide = min(player_slide_amts) if len(
+                    player_slide_amts) > 0 else 0
+                player.max_amount_of_slide = max(player_slide_amts) if len(
+                    player_slide_amts) > 0 else 0
                 player.avg_amount_of_slide = sum(
-                    player.slide_amount_history) / len(player.slide_amount_history) if player.min_amount_of_slide !=0 else 0
+                    player_slide_amts) / len(player_slide_amts) if sum(player_slide_amts) != 0 else 0
+
 
                 player.game_id = game_id
+
+                # turn_no_vs_climb_map
+                climb_flatten = list(chain.from_iterable(d.items() for d in player.climb_amount_history))
+                climb_flatten_map = {j[0]: sum(j[1]) for j in climb_flatten}
+                climb_flatten_map = OrderedDict(sorted(climb_flatten_map.items(), key=lambda item: -item[1]))
+                player.biggest_climb_in_a_single_turn = list(climb_flatten_map.values())[0]
+
+                slide_flatten = list(chain.from_iterable(d.items() for d in player.slide_amount_history))
+                slide_flatten_map = {j[0]: sum(j[1]) for j in slide_flatten}
+                slide_flatten_map = OrderedDict(sorted(slide_flatten_map.items(), key=lambda item: -item[1]))
+                player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[0]
+
                 break
-            
+
             else:
                 if sides_in_a_turn == num_of_players:
                     turn_num += 1
                     sides_in_a_turn = 0
                 player_queue.append(player)
-        
+
         return player
