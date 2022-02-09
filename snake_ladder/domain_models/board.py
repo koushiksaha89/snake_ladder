@@ -7,7 +7,7 @@ from snake_ladder.domain_models.snake import Snake
 
 from abc import abstractmethod
 
-random.seed(10)
+# random.seed(10)
 
 class Board(Ladder, Snake, Dice):
 

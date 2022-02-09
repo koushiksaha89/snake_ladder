@@ -4,7 +4,7 @@ from snake_ladder.domain_models.player import Player
 from faker import Faker
 from collections import deque
 from itertools import chain
-Faker.seed(4321)
+# Faker.seed(4321)
 from collections import OrderedDict
 
 
