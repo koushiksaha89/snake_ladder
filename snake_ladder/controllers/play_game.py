@@ -41,8 +41,7 @@ class GameController(Board):
                     player.total_no_of_lucky_rolls += 1
 
                 # When they roll the exact number needed to win after 94 in a single roll
-                if player.pos > 94 and player.after_94_roll_count == 0 and confirmed_location == self.board_end_loc: 
-                    print('after 94')
+                if player.pos > 94 and player.after_94_roll_count == 0 and confirmed_location == self.board_end_loc:
                     player.total_no_of_lucky_rolls += 1
                     player.after_94_roll_count +=1
                 
