@@ -1,4 +1,3 @@
-from collections import namedtuple
 from snake_ladder.domain_models.board import Board
 from snake_ladder.domain_models.player import Player
 
@@ -11,21 +10,22 @@ class GameController(Board):
         super().__init__(board_size=board_size)
 
     def play_game(self, player: Player):
-
         # assumption: both ladder and snake does not exists at the same location
-
         while True:
             dice_value = self.roll_the_dice()
             tentative_location = confirmed_location = player.pos + dice_value
-
             if tentative_location <= self.board_end_loc:
                 ladder_loc = self.ladder_map.get(tentative_location)
                 snake_loc = self.snake_map.get(tentative_location)
 
                 if ladder_loc is not None:
+                    amount_of_climb = ladder_loc-tentative_location
+                    player.climb_amount_history.append(amount_of_climb)
                     confirmed_location = ladder_loc
 
                 if snake_loc is not None:
+                    amount_of_slide = tentative_location-snake_loc
+                    player.slide_amount_history.append(amount_of_slide)
                     confirmed_location = snake_loc
 
                 player.pos = confirmed_location
