@@ -17,7 +17,10 @@ for player in range(1, no_of_players+1):
         fake_first_name, fake_last_name = fake.name().split(' ')
         p = Player(player_id=player,
                    first_name=fake_first_name,
-                   last_name=fake_last_name
+                   last_name=fake_last_name,
+                   age = randrange(18,50),
+                   address = fake.address(),
+                   mobile_number = fake.phone_number()
                    )
         player_queue.append(p)
 
