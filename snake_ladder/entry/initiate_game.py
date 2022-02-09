@@ -21,11 +21,11 @@ class GameSetup:
         self._game_controller.num_of_ladders = num_of_ladders
         self._game_controller.assign_snake_paths()
         self._game_controller.assign_ladder_paths()
-        self._player_queue = deque()
         self._fake = Faker()
 
     def generate_player_list(self, num_of_players):
 
+        _player_queue = deque()
         for player in range(1, num_of_players+1):
             fake_first_name, fake_last_name = self._fake.name().split(' ')
             p = Player(player_id=player,
@@ -35,15 +35,17 @@ class GameSetup:
                        address=self._fake.address(),
                        mobile_number=self._fake.phone_number()
                        )
-            self._player_queue.append(p)
+            _player_queue.append(p)
+        
+        return _player_queue
 
-    def start_game(self, game_id):
+    def start_game(self, game_id, player_queue):
 
-        if len(self._player_queue) <= 0:
+        if len(player_queue) <= 0:
             raise Exception('Player list is empty')
 
-        while self._player_queue:
-            player = self._player_queue.popleft()
+        while player_queue:
+            player = player_queue.popleft()
             player = self._game_controller.play_game(player)
             
             if player.is_winner == True:
@@ -59,8 +61,9 @@ class GameSetup:
                     player.slide_amount_history) / len(player.slide_amount_history) if player.min_amount_of_slide !=0 else 0
 
                 player.game_id = game_id
-
-                return player
+                break
             
             else:
-                self._player_queue.append(player)
+                player_queue.append(player)
+        
+        return player
