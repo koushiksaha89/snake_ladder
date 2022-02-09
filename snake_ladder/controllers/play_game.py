@@ -11,7 +11,7 @@ class GameController(Board):
 
     def play_game(self, player: Player, turn_num):
         # assumption: both ladder and snake does not exists at the same location
-        print(f'player_id {player.player_id} turn_no {turn_num}')
+        # print(f'player_id {player.player_id} turn_no {turn_num}')
         climb_turn_dict = {turn_num : list()}
         slide_turn_dict = {turn_num : list()}
         while True:
