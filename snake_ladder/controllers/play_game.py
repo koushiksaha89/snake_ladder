@@ -14,7 +14,6 @@ class GameController(Board):
         print(f'player_id {player.player_id} turn_no {turn_num}')
         climb_turn_dict = {turn_num : list()}
         slide_turn_dict = {turn_num : list()}
-        
         while True:
             dice_value = self.roll_the_dice()
             player.total_number_of_dice_rolls += 1
@@ -41,6 +40,15 @@ class GameController(Board):
                 if snake_in_next_location is not None or snake_in_next_next_location is not None:
                     player.total_no_of_lucky_rolls += 1
 
+                # When they roll the exact number needed to win after 94 in a single roll
+                if player.pos > 94 and player.after_94_roll_count == 0 and confirmed_location == self.board_end_loc: 
+                    print('after 94')
+                    player.total_no_of_lucky_rolls += 1
+                    player.after_94_roll_count +=1
+                
+                if player.pos > 94:
+                    player.after_94_roll_count +=1
+                
                 player.pos = confirmed_location
                 player.is_winner = True if confirmed_location == self.board_end_loc else False
 
