@@ -36,7 +36,8 @@
 		"ms-python.python",
 		"ms-python.vscode-pylance",
 		"yzhang.markdown-all-in-one",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"tomoki1207.pdf"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
