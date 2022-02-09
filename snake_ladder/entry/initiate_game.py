@@ -86,12 +86,12 @@ class GameSetup:
                 climb_flatten = list(chain.from_iterable(d.items() for d in player.climb_amount_history))
                 climb_flatten_map = {j[0]: sum(j[1]) for j in climb_flatten}
                 climb_flatten_map = OrderedDict(sorted(climb_flatten_map.items(), key=lambda item: -item[1]))
-                player.biggest_climb_in_a_single_turn = list(climb_flatten_map.values())[0]
+                player.biggest_climb_in_a_single_turn = list(climb_flatten_map.values())[0] if len(climb_flatten_map) > 0 else 0
 
                 slide_flatten = list(chain.from_iterable(d.items() for d in player.slide_amount_history))
                 slide_flatten_map = {j[0]: sum(j[1]) for j in slide_flatten}
                 slide_flatten_map = OrderedDict(sorted(slide_flatten_map.items(), key=lambda item: -item[1]))
-                player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[0]
+                player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[0] if len(slide_flatten_map) > 0 else 0
 
                 break
 
