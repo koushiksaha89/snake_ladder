@@ -23,13 +23,14 @@ class GameSetup:
         self._game_controller.num_of_ladders = num_of_ladders
         self._game_controller.assign_snake_paths()
         self._game_controller.assign_ladder_paths()
-        self._fake = Faker()
+        self._fake = Faker('en_IN')
 
     def generate_player_list(self, num_of_players):
 
         _player_queue = deque()
         for player in range(1, num_of_players+1):
-            fake_first_name, fake_last_name = self._fake.name().split(' ')
+            fake_first_name = self._fake.first_name()
+            fake_last_name = self._fake.last_name()
             p = Player(player_id=player,
                        first_name=fake_first_name,
                        last_name=fake_last_name,
