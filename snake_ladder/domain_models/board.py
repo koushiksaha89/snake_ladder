@@ -26,7 +26,7 @@ class Board(Ladder, Snake, Dice):
         self._no_of_snakes = val
 
     def assign_snake_paths(self):
-
+        # todo: while auto generating need to make sure start and end should not be same
         if self.snake_map is None:
             self.snake_map = defaultdict()
             while True:
@@ -46,7 +46,7 @@ class Board(Ladder, Snake, Dice):
         self._no_of_ladders = value
 
     def assign_ladder_paths(self):
-
+        # todo: while auto generating need to make sure start and end should not be same
         if self.ladder_map is None:
             self.ladder_map = defaultdict()
             while True:
