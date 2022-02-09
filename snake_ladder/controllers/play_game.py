@@ -5,8 +5,8 @@ from snake_ladder.domain_models.player import Player
 class GameController(Board):
 
     def __init__(self,
-                 board_size=100) -> None:
-        # Board.__init__(self, board_size)
+                 board_size) -> None:
+
         super().__init__(board_size=board_size)
 
     def play_game(self, player: Player):
