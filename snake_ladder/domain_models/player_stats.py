@@ -7,7 +7,8 @@ class PlayerStat(ABC):
     def __init__(self) -> None:
 
         super().__init__()
-
+        self.game_id = None
+        
         self.total_number_of_dice_rolls = 0
         
         self.min_amount_of_climb = 0
