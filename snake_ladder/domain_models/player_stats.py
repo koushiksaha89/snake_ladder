@@ -9,10 +9,21 @@ class PlayerStat(ABC):
         super().__init__()
 
         self.total_number_of_dice_rolls = 0
-        self.total_climbs = 0
-        self.total_slides = 0
+        
+        self.min_amount_of_climb = 0
+        self.max_amount_of_climb = 0
+        self.avg_amount_of_climb = 0
+        self.climb_amount_history = []
+        
+        self.min_amount_of_slide = 0
+        self.max_amount_of_slide = 0
+        self.avg_amount_of_slide = 0
+        self.slide_amount_history = []
+        
         self.biggest_climb_in_a_single_turn = 0
         self.biggest_slide_in_a_single_turn = 0
+        
         self.longest_turn = 0
+        
         self.total_no_of_unlucky_rolls = 0
         self.total_no_of_lucky_rolls = 0
