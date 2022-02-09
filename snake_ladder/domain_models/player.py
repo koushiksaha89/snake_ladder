@@ -2,9 +2,10 @@
 test
 """
 from snake_ladder.domain_models.person import Person
+from snake_ladder.domain_models.player_stats import PlayerStat
 
 
-class Player(Person):
+class Player(Person, PlayerStat):
     """
     Test
     """
