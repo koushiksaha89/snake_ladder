@@ -7,7 +7,8 @@ class GameController(Board):
 
     def __init__(self,
                  board_size=100) -> None:
-        Board.__init__(self, board_size)
+        # Board.__init__(self, board_size)
+        super().__init__(board_size=board_size)
 
     def play_game(self, player: Player):
 

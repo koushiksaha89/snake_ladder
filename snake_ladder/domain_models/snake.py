@@ -6,7 +6,7 @@ class Snake(ABC):
     def __init__(self) -> None:
         """test
         """
-
+        super().__init__()
         self._no_of_snakes = None
         self.snake_map = None
 

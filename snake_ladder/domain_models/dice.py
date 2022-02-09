@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 class Dice(ABC):
 
     def __init__(self) -> None:
+        super().__init__()
         self._no_of_dice = None
         self.dice_name = None
     

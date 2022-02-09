@@ -13,9 +13,7 @@ class Board(Ladder, Snake, Dice):
 
     def __init__(self, board_size) -> None:
 
-        Ladder.__init__(self)
-        Snake.__init__(self)
-        Dice.__init__(self)
+        super().__init__()
         self.board_start_loc = 0
         self.board_end_loc = board_size
 

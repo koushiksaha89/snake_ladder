@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 class Ladder(ABC):
 
     def __init__(self) -> None:
+        super().__init__()
         self._no_of_ladders = None
         self.ladder_map = None
 
