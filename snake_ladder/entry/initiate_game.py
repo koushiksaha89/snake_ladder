@@ -43,10 +43,14 @@ class GameSetup:
 
         if len(player_queue) <= 0:
             raise Exception('Player list is empty')
-
+        
+        turn_num = 1
+        num_of_players = len(player_queue)
+        sides_in_a_turn = 0
         while player_queue:
+            sides_in_a_turn += 1
             player = player_queue.popleft()
-            player = self._game_controller.play_game(player)
+            player = self._game_controller.play_game(player, turn_num)
             
             if player.is_winner == True:
 
@@ -64,6 +68,9 @@ class GameSetup:
                 break
             
             else:
+                if sides_in_a_turn == num_of_players:
+                    turn_num += 1
+                    sides_in_a_turn = 0
                 player_queue.append(player)
         
         return player

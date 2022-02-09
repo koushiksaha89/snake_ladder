@@ -9,8 +9,9 @@ class GameController(Board):
 
         super().__init__(board_size=board_size)
 
-    def play_game(self, player: Player):
+    def play_game(self, player: Player, turn_num):
         # assumption: both ladder and snake does not exists at the same location
+        # print(f'player_id {player.player_id} turn_no {turn_num}')
         while True:
             dice_value = self.roll_the_dice()
             tentative_location = confirmed_location = player.pos + dice_value
