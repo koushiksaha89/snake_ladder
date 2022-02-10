@@ -94,6 +94,20 @@ class GameSetup:
                 slide_flatten_map = OrderedDict(sorted(slide_flatten_map.items(), key=lambda item: -item[1]))
                 player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[0] if len(slide_flatten_map) > 0 else 0
 
+                
+                max_value_when_turn_is_one = 0
+                total_one_turn = 0
+                for turn_history_6 in player.turn_history_6:
+                    for _ , value in turn_history_6.items():
+                        if len(value) > len(player.longest_turn):
+                            player.longest_turn.extend(value)
+                        if len(value) == 1:
+                            total_one_turn += 1
+                            max_value_when_turn_is_one = max(max_value_when_turn_is_one,value[0])
+                
+                if len(player.turn_history_6) == total_one_turn:
+                    player.longest_turn = [max_value_when_turn_is_one]
+
                 break
 
             else:
