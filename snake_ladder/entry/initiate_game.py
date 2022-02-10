@@ -54,66 +54,70 @@ class GameSetup:
             sides_in_a_turn += 1
             player = player_queue.popleft()
             player = self._game_controller.play_game(player, turn_num)
-
+            player.game_id = game_id
             if player.is_winner == True:
-
-                player_climbs_amts = list(chain.from_iterable(d.items()
-                                 for d in player.climb_amount_history))
-                player_climbs_amts = [x[1] for x in player_climbs_amts]
-                player_climbs_amts = list(chain.from_iterable(player_climbs_amts))
-                player.min_amount_of_climb = min(player_climbs_amts) if len(
-                    player_climbs_amts) > 0 else 0
-                player.max_amount_of_climb = max(player_climbs_amts) if len(
-                    player_climbs_amts) > 0 else 0
-                player.avg_amount_of_climb = sum(
-                    player_climbs_amts) / len(player_climbs_amts) if sum(player_climbs_amts) != 0 else 0
-
-
-                player_slide_amts = list(chain.from_iterable(d.items()
-                                 for d in player.slide_amount_history))
-                player_slide_amts = [x[1] for x in player_slide_amts]
-                player_slide_amts = list(chain.from_iterable(player_slide_amts))
-                player.min_amount_of_slide = min(player_slide_amts) if len(
-                    player_slide_amts) > 0 else 0
-                player.max_amount_of_slide = max(player_slide_amts) if len(
-                    player_slide_amts) > 0 else 0
-                player.avg_amount_of_slide = sum(
-                    player_slide_amts) / len(player_slide_amts) if sum(player_slide_amts) != 0 else 0
-
-
-                player.game_id = game_id
-
-                # turn_no_vs_climb_map
-                climb_flatten = list(chain.from_iterable(d.items() for d in player.climb_amount_history))
-                climb_flatten_map = {j[0]: sum(j[1]) for j in climb_flatten}
-                climb_flatten_map = OrderedDict(sorted(climb_flatten_map.items(), key=lambda item: -item[1]))
-                player.biggest_climb_in_a_single_turn = list(climb_flatten_map.values())[0] if len(climb_flatten_map) > 0 else 0
-
-                slide_flatten = list(chain.from_iterable(d.items() for d in player.slide_amount_history))
-                slide_flatten_map = {j[0]: sum(j[1]) for j in slide_flatten}
-                slide_flatten_map = OrderedDict(sorted(slide_flatten_map.items(), key=lambda item: -item[1]))
-                player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[0] if len(slide_flatten_map) > 0 else 0
-
-                
-                max_value_when_turn_is_one = 0
-                total_one_turn = 0
-                for turn_history_6 in player.turn_history_6:
-                    for _ , value in turn_history_6.items():
-                        if len(value) > len(player.longest_turn):
-                            player.longest_turn.extend(value)
-                        if len(value) == 1:
-                            total_one_turn += 1
-                            max_value_when_turn_is_one = max(max_value_when_turn_is_one,value[0])
-                
-                if len(player.turn_history_6) == total_one_turn:
-                    player.longest_turn = [max_value_when_turn_is_one]
-
+                return self.get_player_stat(player)
                 break
-
             else:
                 if sides_in_a_turn == num_of_players:
                     turn_num += 1
                     sides_in_a_turn = 0
                 player_queue.append(player)
+
+    def get_player_stat(self, player):
+        player_climbs_amts = list(chain.from_iterable(d.items()
+                                 for d in player.climb_amount_history))
+        player_climbs_amts = [x[1] for x in player_climbs_amts]
+        player_climbs_amts = list(
+            chain.from_iterable(player_climbs_amts))
+        player.min_amount_of_climb = min(player_climbs_amts) if len(
+            player_climbs_amts) > 0 else 0
+        player.max_amount_of_climb = max(player_climbs_amts) if len(
+            player_climbs_amts) > 0 else 0
+        player.avg_amount_of_climb = sum(
+            player_climbs_amts) / len(player_climbs_amts) if sum(player_climbs_amts) != 0 else 0
+
+        player_slide_amts = list(chain.from_iterable(d.items()
+                            for d in player.slide_amount_history))
+        player_slide_amts = [x[1] for x in player_slide_amts]
+        player_slide_amts = list(
+            chain.from_iterable(player_slide_amts))
+        player.min_amount_of_slide = min(player_slide_amts) if len(
+            player_slide_amts) > 0 else 0
+        player.max_amount_of_slide = max(player_slide_amts) if len(
+            player_slide_amts) > 0 else 0
+        player.avg_amount_of_slide = sum(
+            player_slide_amts) / len(player_slide_amts) if sum(player_slide_amts) != 0 else 0
+
+        # turn_no_vs_climb_map
+        climb_flatten = list(chain.from_iterable(
+            d.items() for d in player.climb_amount_history))
+        climb_flatten_map = {j[0]: sum(j[1]) for j in climb_flatten}
+        climb_flatten_map = OrderedDict(
+            sorted(climb_flatten_map.items(), key=lambda item: -item[1]))
+        player.biggest_climb_in_a_single_turn = list(climb_flatten_map.values())[
+                                                        0] if len(climb_flatten_map) > 0 else 0
+
+        slide_flatten = list(chain.from_iterable(
+            d.items() for d in player.slide_amount_history))
+        slide_flatten_map = {j[0]: sum(j[1]) for j in slide_flatten}
+        slide_flatten_map = OrderedDict(
+            sorted(slide_flatten_map.items(), key=lambda item: -item[1]))
+        player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[
+                                                        0] if len(slide_flatten_map) > 0 else 0
+
+        max_value_when_turn_is_one = 0
+        total_one_turn = 0
+        for turn_history_6 in player.turn_history_6:
+            for _, value in turn_history_6.items():
+                if len(value) > len(player.longest_turn):
+                    player.longest_turn.extend(value)
+                if len(value) == 1:
+                    total_one_turn += 1
+                    max_value_when_turn_is_one = max(
+                        max_value_when_turn_is_one, value[0])
+
+        if len(player.turn_history_6) == total_one_turn:
+            player.longest_turn = [max_value_when_turn_is_one]    
 
         return player
