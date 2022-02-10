@@ -8,6 +8,7 @@
 4. **How to Run**
    1. To run the simulation pls use `snake_ladder/tests/test_the_game.py`
    2. It contains inputs(mandetory and optional) to game. For ex. `simulation_count`, `num_of_ladders`, `num_of_snakes`, `num_of_players` are mandetory. `dice_count` and `board_size` is optional.
+   3. Also there is a debug profile is set named as `play snake and ladder` inside `.vscode/launch.json`. This can launched easily from the debug tab of vscode. This also sets the `PYTHONPATH` which is required for package discovery.
 
 5. Few of the places code needs improvement:
    1. Object validation check
