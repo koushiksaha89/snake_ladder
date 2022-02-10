@@ -7,7 +7,7 @@
 
 4. **How to Run**
    1. To run the simulation pls use `snake_ladder/tests/test_the_game.py`
-   2. It contains inputs(mandetory and optional) to game. For ex. `num_of_ladders` , `num_of_snakes` , `num_of_players` are mandetory. `dice_count` and `board_size` is optional.
+   2. It contains inputs(mandetory and optional) to game. For ex. `simulation_count`, `num_of_ladders`, `num_of_snakes`, `num_of_players` are mandetory. `dice_count` and `board_size` is optional.
 
 5. Few of the places code needs improvement:
    1. Object validation check
