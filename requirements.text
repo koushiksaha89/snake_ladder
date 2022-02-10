@@ -1,3 +1,4 @@
 ipykernel
 pytest
 Faker
+rich
