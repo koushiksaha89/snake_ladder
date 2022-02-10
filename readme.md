@@ -19,5 +19,5 @@
    1. This repo contains `.devcontainer` and `.vscode` metadata folers. Using `Remote-Containers: Clone Repository in Named Container Volume` in vscode it can be easily cloned. Metadata files would help to configure swiftly.
    2. Though it requires extension named `Remote - Containers`. Using extension id is `ms-vscode-remote.remote-containers` it can be installed swiftly.
 
-![Sample Output](sameple_output.png)
+![Sample Output](sample_output.png)
 
