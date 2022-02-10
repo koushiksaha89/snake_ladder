@@ -13,6 +13,7 @@
    1. Object validation check
    2. Introduction of exception class alinged with-in the context of the game.
    3. Module / Class doc strings
+   4. Add Linting
 
 6. How to configure this workspace
    1. This repo contains `.devcontainer` and `.vscode` metadata folers. Using `Remote-Containers: Clone Repository in Named Container Volume` in vscode it can be easily cloned. Metadata files would help to configure swiftly.
