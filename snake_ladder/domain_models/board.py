@@ -68,7 +68,7 @@ class Board(Ladder, Snake, Dice):
         self._no_of_dice = value
 
     def roll_the_dice(self):
-        dice_start_index = 0
+        dice_start_index = 1
         dice_end_index = self.dice_count * 6
         return randrange(dice_start_index, dice_end_index + 1)
 

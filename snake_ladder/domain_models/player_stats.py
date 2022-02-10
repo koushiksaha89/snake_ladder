@@ -24,8 +24,8 @@ class PlayerStat(ABC):
         self.biggest_climb_in_a_single_turn = 0
         self.biggest_slide_in_a_single_turn = 0
         
-        self.longest_turn = 0
-        
+        self.turn_history_6 = []
+        self.longest_turn = []
         self.total_no_of_unlucky_rolls = 0
         self.total_no_of_lucky_rolls = 0
 

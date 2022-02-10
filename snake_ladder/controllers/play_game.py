@@ -14,8 +14,17 @@ class GameController(Board):
         # print(f'player_id {player.player_id} turn_no {turn_num}')
         climb_turn_dict = {turn_num : list()}
         slide_turn_dict = {turn_num : list()}
+        player_rolled_six = None
+        single_turn_steaks = {turn_num : list()}
+        sub_turn = 0
         while True:
+            
             dice_value = self.roll_the_dice()
+            sub_turn += 1
+            if dice_value == 6 and sub_turn == 1:
+                player_rolled_six = True
+            if player_rolled_six == True and sub_turn >1 :
+                single_turn_steaks[turn_num].extend([dice_value])
             player.total_number_of_dice_rolls += 1
             tentative_location = confirmed_location = player.pos + dice_value
             if tentative_location <= self.board_end_loc:
@@ -61,4 +70,7 @@ class GameController(Board):
             player.climb_amount_history.append(climb_turn_dict)
         if list(slide_turn_dict.values())[0] != []:
             player.slide_amount_history.append(slide_turn_dict)
+        if list(single_turn_steaks.values())[0] != []:
+            player.turn_history_6.append(single_turn_steaks)
+
         return player
