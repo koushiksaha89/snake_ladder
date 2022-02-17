@@ -1,13 +1,11 @@
-from random import randrange
+from abc import abstractmethod
 from collections import defaultdict
-import random
+from random import randrange
+
 from snake_ladder.domain_models.dice import Dice
 from snake_ladder.domain_models.ladder import Ladder
 from snake_ladder.domain_models.snake import Snake
 
-from abc import abstractmethod
-
-# random.seed(10)
 
 class Board(Ladder, Snake, Dice):
 
