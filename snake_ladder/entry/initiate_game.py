@@ -68,7 +68,7 @@ class GameSetup:
             else:
                 won_player_list.append(self.get_player_stat(player))
 
-        return self.get_game_stat(won_player_list)
+        return self.get_game_stat(won_player_list, game_id)
 
     def get_player_stat(self, player):
         player_climbs_amts = list(chain.from_iterable(d.items()
@@ -128,7 +128,7 @@ class GameSetup:
 
         return player
 
-    def get_game_stat(self, player_list):
+    def get_game_stat(self, player_list, game_id):
         gs = GameStats()
         gs.min_number_of_rolls_to_win = min(
             [x.total_number_of_dice_rolls for x in player_list])
@@ -175,5 +175,5 @@ class GameSetup:
 
         longest_turns = [x.longest_turn for x in player_list]
         gs.longest_turn = sort_lists_by_maxes(*longest_turns)[0]
-
+        gs.game_id = game_id
         return gs

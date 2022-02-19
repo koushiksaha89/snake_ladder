@@ -28,3 +28,5 @@ class GameStats:
         self.min_number_of_lucky_rolls = None
         self.max_number_of_lucky_rolls = None
         self.avg_number_of_lucky_rolls = None
+
+        self.game_id = None
