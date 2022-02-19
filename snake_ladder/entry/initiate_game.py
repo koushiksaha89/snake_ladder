@@ -117,6 +117,7 @@ class GameSetup:
         for turn_history_6 in player.turn_history_6:
             for _, value in turn_history_6.items():
                 if len(value) > len(player.longest_turn):
+                    player.longest_turn = []
                     player.longest_turn.extend(value)
                 if len(value) == 1:
                     total_one_turn += 1
