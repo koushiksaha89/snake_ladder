@@ -23,8 +23,8 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             },
-            // "envFile": "${workspaceRoot}/.env",
             "console": "integratedTerminal",
+            "args": ["-s"]
         }
     ]
 }
