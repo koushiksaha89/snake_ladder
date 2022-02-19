@@ -28,5 +28,3 @@ class PlayerStat(ABC):
         self.longest_turn = []
         self.total_no_of_unlucky_rolls = 0
         self.total_no_of_lucky_rolls = 0
-
-        self.after_94_roll_count = 0
