@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from collections import defaultdict
 
 
 class Snake(ABC):
@@ -8,7 +9,7 @@ class Snake(ABC):
         """
         super().__init__()
         self._no_of_snakes = None
-        self.snake_map = None
+        self.snake_map = defaultdict()
 
     @abstractmethod
     def assign_snake_paths(self):
