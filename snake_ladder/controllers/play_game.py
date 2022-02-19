@@ -17,17 +17,21 @@ class GameController(Board):
 
         while True:
             turn_metrics_dict = dict()
-            # rolling the dice and recording the dice vs sub-turn count
-            dice_value = self.roll_the_dice()
             sub_turn += 1
+            ladder_loc = None
+            snake_loc = None
+            confirmed_location = None
+            tentative_location = None
 
+             # rolling the dice and recording the dice vs sub-turn count
+            dice_value = self.roll_the_dice()
             turn_metrics_dict['starting_loc'] = player.pos
             turn_metrics_dict['sub_turn_number'] = sub_turn
             turn_metrics_dict['sub_turn_dice_value'] = dice_value
 
             # getting the tentative location after dice roll
             tentative_location = confirmed_location = player.pos + dice_value
-
+            turn_metrics_dict['tentative_loc'] = tentative_location
             # tentative location should be with-in the current board size
             if tentative_location <= self.board_end_loc:
                 ladder_loc = self.ladder_map.get(tentative_location)
@@ -99,7 +103,7 @@ class GameController(Board):
                 player.total_no_of_lucky_rolls += 1
 
             if object_kind is BoardObjecs.SNAKE:
-                amount_of_slide = each_turn_metrics['starting_loc'] - \
+                amount_of_slide = each_turn_metrics['tentative_loc'] - \
                     each_turn_metrics['confirm_loc']
                 slide_turn_dict[turn_num].extend([amount_of_slide])
                 player.total_no_of_unlucky_rolls += 1
