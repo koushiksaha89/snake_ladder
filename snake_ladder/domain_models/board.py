@@ -24,13 +24,16 @@ class Board(Ladder, Snake, Dice):
         self._no_of_snakes = val
 
     def assign_snake_paths(self):
-        if self.snake_map is None:
-            self.snake_map = defaultdict()
+        if bool(self.snake_map) is False:
             while True:
                 end_pos = randrange(1, divmod(self.board_end_loc, 2)[0])
                 start_pos = randrange(end_pos, self.board_end_loc)
                 if end_pos == start_pos:
                     continue
+
+                if self.ladder_map.get(start_pos) is not None or self.ladder_map.get(end_pos) is not None:
+                    continue
+
                 self.snake_map[start_pos] = end_pos
 
                 if len(self.snake_map.keys()) >= self.num_of_snakes:
@@ -45,13 +48,16 @@ class Board(Ladder, Snake, Dice):
         self._no_of_ladders = value
 
     def assign_ladder_paths(self):
-        if self.ladder_map is None:
-            self.ladder_map = defaultdict()
+        if bool(self.ladder_map) is False:
             while True:
                 end_pos = randrange(1, divmod(self.board_end_loc, 2)[0])
                 start_pos = randrange(end_pos, self.board_end_loc)
                 if end_pos == start_pos:
                     continue
+
+                if self.snake_map.get(start_pos) is not None or self.snake_map.get(end_pos) is not None:
+                    continue
+
                 self.ladder_map[end_pos] = start_pos
 
                 if len(self.ladder_map.keys()) >= self.num_of_ladders:
