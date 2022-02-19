@@ -4,7 +4,6 @@ from snake_ladder.domain_models.player import Player
 from faker import Faker
 from collections import deque
 from itertools import chain
-# Faker.seed(4321)
 from collections import OrderedDict
 
 
@@ -53,8 +52,12 @@ class GameSetup:
         while player_queue:
             sides_in_a_turn += 1
             player = player_queue.popleft()
-            player = self._game_controller.play_game(player, turn_num)
+            player, turn_metrics = self._game_controller.play_game(
+                player)
             player.game_id = game_id
+            self._game_controller.update_stats_for_a_player(player,
+                                                            turn_num,
+                                                            turn_metrics)
             if player.is_winner == True:
                 return self.get_player_stat(player)
                 break
@@ -66,7 +69,7 @@ class GameSetup:
 
     def get_player_stat(self, player):
         player_climbs_amts = list(chain.from_iterable(d.items()
-                                 for d in player.climb_amount_history))
+                                                      for d in player.climb_amount_history))
         player_climbs_amts = [x[1] for x in player_climbs_amts]
         player_climbs_amts = list(
             chain.from_iterable(player_climbs_amts))
@@ -78,7 +81,7 @@ class GameSetup:
             player_climbs_amts) / len(player_climbs_amts) if sum(player_climbs_amts) != 0 else 0
 
         player_slide_amts = list(chain.from_iterable(d.items()
-                            for d in player.slide_amount_history))
+                                                     for d in player.slide_amount_history))
         player_slide_amts = [x[1] for x in player_slide_amts]
         player_slide_amts = list(
             chain.from_iterable(player_slide_amts))
@@ -96,7 +99,7 @@ class GameSetup:
         climb_flatten_map = OrderedDict(
             sorted(climb_flatten_map.items(), key=lambda item: -item[1]))
         player.biggest_climb_in_a_single_turn = list(climb_flatten_map.values())[
-                                                        0] if len(climb_flatten_map) > 0 else 0
+            0] if len(climb_flatten_map) > 0 else 0
 
         slide_flatten = list(chain.from_iterable(
             d.items() for d in player.slide_amount_history))
@@ -104,7 +107,7 @@ class GameSetup:
         slide_flatten_map = OrderedDict(
             sorted(slide_flatten_map.items(), key=lambda item: -item[1]))
         player.biggest_slide_in_a_single_turn = list(slide_flatten_map.values())[
-                                                        0] if len(slide_flatten_map) > 0 else 0
+            0] if len(slide_flatten_map) > 0 else 0
 
         max_value_when_turn_is_one = 0
         total_one_turn = 0
@@ -118,6 +121,6 @@ class GameSetup:
                         max_value_when_turn_is_one, value[0])
 
         if len(player.turn_history_6) == total_one_turn:
-            player.longest_turn = [max_value_when_turn_is_one]    
+            player.longest_turn = [max_value_when_turn_is_one]
 
         return player
