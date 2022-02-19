@@ -1,10 +1,11 @@
-from random import randrange
-from snake_ladder.controllers.play_game import GameController
-from snake_ladder.domain_models.player import Player
-from faker import Faker
-from collections import deque
+from collections import OrderedDict, deque
 from itertools import chain
-from collections import OrderedDict
+from random import randrange
+
+from faker import Faker
+from snake_ladder.controllers.play_game import GameController
+from snake_ladder.domain_models.game_stats import GameStats
+from snake_ladder.domain_models.player import Player
 
 
 class GameSetup:
@@ -49,6 +50,7 @@ class GameSetup:
         turn_num = 1
         num_of_players = len(player_queue)
         sides_in_a_turn = 0
+        won_player_list = []
         while player_queue:
             sides_in_a_turn += 1
             player = player_queue.popleft()
@@ -58,14 +60,15 @@ class GameSetup:
             self._game_controller.update_stats_for_a_player(player,
                                                             turn_num,
                                                             turn_metrics)
-            if player.is_winner == True:
-                return self.get_player_stat(player)
-                break
-            else:
-                if sides_in_a_turn == num_of_players:
-                    turn_num += 1
-                    sides_in_a_turn = 0
+            if sides_in_a_turn == num_of_players:
+                turn_num += 1
+                sides_in_a_turn = 0
+            if player.is_winner is False:
                 player_queue.append(player)
+            else:
+                won_player_list.append(self.get_player_stat(player))
+
+        return self.get_game_stat(won_player_list)
 
     def get_player_stat(self, player):
         player_climbs_amts = list(chain.from_iterable(d.items()
@@ -124,3 +127,53 @@ class GameSetup:
             player.longest_turn = [max_value_when_turn_is_one]
 
         return player
+
+    def get_game_stat(self, player_list):
+        gs = GameStats()
+        gs.min_number_of_rolls_to_win = min(
+            [x.total_number_of_dice_rolls for x in player_list])
+        gs.max_number_of_rolls_to_win = max(
+            [x.total_number_of_dice_rolls for x in player_list])
+        gs.avg_number_of_rolls_to_win = sum(
+            [x.total_number_of_dice_rolls for x in player_list]) / len(player_list)
+
+        gs.min_amount_of_climbs = min(
+            [x.min_amount_of_climb for x in player_list])
+        gs.max_amount_of_climbs = max(
+            [x.max_amount_of_climb for x in player_list])
+        gs.avg_amount_of_climbs = round(
+            sum([x.avg_amount_of_climb for x in player_list]) / len(player_list), 2)
+
+        gs.min_amount_of_slides = min(
+            [x.min_amount_of_slide for x in player_list])
+        gs.max_amount_of_slides = max(
+            [x.max_amount_of_slide for x in player_list])
+        gs.avg_amount_of_slides = round(
+            sum([x.avg_amount_of_slide for x in player_list]) / len(player_list), 2)
+
+        gs.biggest_climb_in_a_single_turn = max(
+            [x.biggest_climb_in_a_single_turn for x in player_list])
+        gs.biggest_slide_in_a_single_turn = max(
+            [x.biggest_slide_in_a_single_turn for x in player_list])
+
+        gs.min_number_of_unlucky_rolls = min(
+            [x.total_no_of_unlucky_rolls for x in player_list])
+        gs.max_number_of_unlucky_rolls = max(
+            [x.total_no_of_unlucky_rolls for x in player_list])
+        gs.avg_number_of_unlucky_rolls = round(
+            sum([x.total_no_of_unlucky_rolls for x in player_list]) / len(player_list), 2)
+
+        gs.min_number_of_lucky_rolls = min(
+            [x.total_no_of_lucky_rolls for x in player_list])
+        gs.max_number_of_lucky_rolls = max(
+            [x.total_no_of_lucky_rolls for x in player_list])
+        gs.avg_number_of_lucky_rolls = sum(
+            [x.total_no_of_lucky_rolls for x in player_list]) / len(player_list)
+
+        def sort_lists_by_maxes(*lists):
+            return sorted(lists, key=lambda x: sorted(x, reverse=True), reverse=True)
+
+        longest_turns = [x.longest_turn for x in player_list]
+        gs.longest_turn = sort_lists_by_maxes(*longest_turns)[0]
+
+        return gs
