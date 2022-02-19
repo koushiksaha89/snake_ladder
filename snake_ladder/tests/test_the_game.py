@@ -11,6 +11,30 @@ def test_the_game():
         g = GameSetup(num_of_snakes=30, num_of_ladders=8)
         player_list = g.generate_player_list(num_of_players=3)
         simulation_count = 3
+
+        max_amt_slide = 0
+        biggest_snake_start = 0
+        biggest_snake_end = 0
+        for snake_start, snake_end in g.game_controller.snake_map.items():
+            old_snake_max = max_amt_slide
+            max_amt_slide = max(max_amt_slide, (snake_start-snake_end))
+            if old_snake_max!=max_amt_slide:
+                biggest_snake_start = snake_start
+                biggest_snake_end = snake_end
+
+        max_amt_ladder = 0
+        biggest_ladder_start = 0
+        biggest_ladder_end = 0
+        for ladder_start, ladder_end in g.game_controller.ladder_map.items():
+            old_ladder_max = max_amt_ladder
+            max_amt_ladder = max(max_amt_ladder, (ladder_end - ladder_start))
+            if old_ladder_max != max_amt_ladder:
+                biggest_ladder_start = ladder_start
+                biggest_ladder_end = ladder_end
+        
+        print(f"max_amt_slide:{max_amt_slide} biggest_snake_start:{biggest_snake_start} biggest_snake_end:{biggest_snake_end}")
+        print(f"max_amt_climb:{max_amt_ladder} biggest_ladder_start:{biggest_ladder_start} biggest_ladder_end:{biggest_ladder_end}")
+        
         for _ in range(0, simulation_count):
             game_stat = g.start_game(str(uuid4()), deepcopy(player_list))
             print_json(json.dumps(game_stat.__dict__))
