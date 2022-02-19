@@ -28,7 +28,7 @@ class Board(Ladder, Snake, Dice):
             while True:
                 end_pos = randrange(1, divmod(self.board_end_loc, 2)[0])
                 start_pos = randrange(end_pos, self.board_end_loc)
-                if end_pos == start_pos:
+                if end_pos == start_pos or start_pos - end_pos <=5:
                     continue
 
                 if self.ladder_map.get(start_pos) is not None or self.ladder_map.get(end_pos) is not None:
@@ -52,7 +52,7 @@ class Board(Ladder, Snake, Dice):
             while True:
                 end_pos = randrange(1, divmod(self.board_end_loc, 2)[0])
                 start_pos = randrange(end_pos, self.board_end_loc)
-                if end_pos == start_pos:
+                if end_pos == start_pos or start_pos - end_pos <=5:
                     continue
 
                 if self.snake_map.get(start_pos) is not None or self.snake_map.get(end_pos) is not None:
