@@ -11,6 +11,6 @@ g = GameSetup(num_of_snakes=18, num_of_ladders=3)
 player_list = g.generate_player_list(num_of_players=3)
 
 for i in range(0, simulation_count):
-    winner_of_the_game = g.start_game(i, deepcopy(player_list))
+    game_stat = g.start_game(i, deepcopy(player_list))
     console.log(
-        f'winner of the game {winner_of_the_game.__dict__} for simulation id: {i}' ,end='\n\n')
+        f'game stat {game_stat.__dict__} for simulation id: {i}' ,end='\n\n')
