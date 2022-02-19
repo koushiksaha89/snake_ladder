@@ -1,18 +1,47 @@
-from snake_ladder.entry.initiate_game import GameSetup
-from copy import deepcopy
-from rich import print as rprint, print_json
-from rich.console import Console
 import json
+from copy import deepcopy
 from uuid import uuid4
 
-console = Console()
+from rich import print, print_json
+from snake_ladder.entry.initiate_game import GameSetup
 
-simulation_count = 3
 
-g = GameSetup(num_of_snakes=18, num_of_ladders=3)
-player_list = g.generate_player_list(num_of_players=3)
+def test_the_game():
+    try:
+        g = GameSetup(num_of_snakes=30, num_of_ladders=8)
+        player_list = g.generate_player_list(num_of_players=3)
+        simulation_count = 3
+        for _ in range(0, simulation_count):
+            game_stat = g.start_game(str(uuid4()), deepcopy(player_list))
+            print_json(json.dumps(game_stat.__dict__))
+            print('', end='\n')
+        assert True
 
-for i in range(0, simulation_count):
-    game_stat = g.start_game(str(uuid4()), deepcopy(player_list))
-    print_json(json.dumps(game_stat.__dict__))
-    print('', end='\n')
+    except Exception as e:
+        assert False
+
+
+def test_snake_assignment():
+
+    number_of_snake = 22
+    number_of_ladder = 8
+    snake_game = GameSetup(num_of_ladders=number_of_ladder,
+                           num_of_snakes=number_of_snake)
+    if len(snake_game.game_controller.snake_map) == number_of_snake and len(snake_game.game_controller.ladder_map) == number_of_ladder:
+        assert True
+    else:
+        assert False
+
+def test_snake_ladder_assignment():
+    # no two cell can have snake and ladder
+    number_of_snake = 22
+    number_of_ladder = 8
+    snake_game = GameSetup(num_of_ladders=number_of_ladder,
+                           num_of_snakes=number_of_snake)
+
+    snake_starting_points = set(snake_game.game_controller.snake_map.keys())
+    ladder_starting_points = set(snake_game.game_controller.ladder_map.keys())
+    if not snake_starting_points.intersection(ladder_starting_points):
+        assert False
+    else:
+        assert True

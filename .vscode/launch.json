@@ -14,5 +14,17 @@
                 "PYTHONPATH": "${workspaceFolder}"
             }
         },
+        {
+            "name": "Python: pytest",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            // "envFile": "${workspaceRoot}/.env",
+            "console": "integratedTerminal",
+        }
     ]
 }

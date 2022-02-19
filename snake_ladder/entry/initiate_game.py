@@ -17,12 +17,12 @@ class GameSetup:
                  board_size=100) -> None:
 
         super().__init__()
-        self._game_controller = GameController(board_size)
-        self._game_controller.dice_count = dice_count
-        self._game_controller.num_of_snakes = num_of_snakes
-        self._game_controller.num_of_ladders = num_of_ladders
-        self._game_controller.assign_snake_paths()
-        self._game_controller.assign_ladder_paths()
+        self.game_controller = GameController(board_size)
+        self.game_controller.dice_count = dice_count
+        self.game_controller.num_of_snakes = num_of_snakes
+        self.game_controller.num_of_ladders = num_of_ladders
+        self.game_controller.assign_snake_paths()
+        self.game_controller.assign_ladder_paths()
         self._fake = Faker('en_IN')
 
     def generate_player_list(self, num_of_players):
@@ -54,10 +54,10 @@ class GameSetup:
         while player_queue:
             sides_in_a_turn += 1
             player = player_queue.popleft()
-            player, turn_metrics = self._game_controller.play_game(
+            player, turn_metrics = self.game_controller.play_game(
                 player)
             player.game_id = game_id
-            self._game_controller.update_stats_for_a_player(player,
+            self.game_controller.update_stats_for_a_player(player,
                                                             turn_num,
                                                             turn_metrics)
             if sides_in_a_turn == num_of_players:
