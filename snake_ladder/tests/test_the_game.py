@@ -21,7 +21,7 @@ def test_the_game():
         assert False
 
 
-def test_snake_assignment():
+def test_snake_ladder_number_assignment():
 
     number_of_snake = 22
     number_of_ladder = 8
@@ -41,7 +41,9 @@ def test_snake_ladder_assignment():
 
     snake_starting_points = set(snake_game.game_controller.snake_map.keys())
     ladder_starting_points = set(snake_game.game_controller.ladder_map.keys())
-    if not snake_starting_points.intersection(ladder_starting_points):
-        assert False
-    else:
+    intersection_starting_points = snake_starting_points.intersection(ladder_starting_points)
+
+    if len(intersection_starting_points) == 0:
         assert True
+    else:
+        assert False
