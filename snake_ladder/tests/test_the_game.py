@@ -47,3 +47,30 @@ def test_snake_ladder_assignment():
         assert True
     else:
         assert False
+
+def test_snake_head_leg_diff():
+    number_of_snake = 22
+    number_of_ladder = 8
+    snake_game = GameSetup(num_of_ladders=number_of_ladder,
+                           num_of_snakes=number_of_snake)
+    for key,value in snake_game.game_controller.snake_map.items():
+        if key - value < 0:
+            assert False
+        else:
+            continue
+
+    assert True
+
+
+def test_ladder_start_end_diff():
+    number_of_snake = 5
+    number_of_ladder = 20
+    snake_game = GameSetup(num_of_ladders=number_of_ladder,
+                           num_of_snakes=number_of_snake)
+    for key,value in snake_game.game_controller.ladder_map.items():
+        if key - value > 0:
+            assert False
+        else:
+            continue
+
+    assert True                      
