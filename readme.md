@@ -22,3 +22,4 @@
 
 ![Sample Output](sample_output.png)
 
+![Test Coverage](test_coverage.png)
