@@ -52,10 +52,11 @@ def test_the_game(num_of_snakes,
         assert False
 
 
-def test_snake_ladder_number_assignment():
+@pytest.mark.parametrize("num_of_snakes,num_of_ladders", [(30, 8)])
+def test_snake_ladder_number_assignment(num_of_snakes, num_of_ladders):
 
-    number_of_snake = 22
-    number_of_ladder = 8
+    number_of_snake = num_of_snakes
+    number_of_ladder = num_of_ladders
     snake_game = GameSetup(num_of_ladders=number_of_ladder,
                            num_of_snakes=number_of_snake)
     if len(snake_game.game_controller.snake_map) == number_of_snake and len(snake_game.game_controller.ladder_map) == number_of_ladder:
@@ -64,10 +65,11 @@ def test_snake_ladder_number_assignment():
         assert False
 
 
-def test_snake_ladder_assignment():
+@pytest.mark.parametrize("num_of_snakes,num_of_ladders", [(30, 8)])
+def test_snake_ladder_assignment(num_of_snakes, num_of_ladders):
     # no two cell can have snake and ladder
-    number_of_snake = 22
-    number_of_ladder = 8
+    number_of_snake = num_of_snakes
+    number_of_ladder = num_of_ladders
     snake_game = GameSetup(num_of_ladders=number_of_ladder,
                            num_of_snakes=number_of_snake)
 
@@ -82,9 +84,10 @@ def test_snake_ladder_assignment():
         assert False
 
 
-def test_snake_head_leg_diff():
-    number_of_snake = 22
-    number_of_ladder = 8
+@pytest.mark.parametrize("num_of_snakes,num_of_ladders", [(30, 8)])
+def test_snake_head_leg_diff(num_of_snakes, num_of_ladders):
+    number_of_snake = num_of_snakes
+    number_of_ladder = num_of_ladders
     snake_game = GameSetup(num_of_ladders=number_of_ladder,
                            num_of_snakes=number_of_snake)
     for key, value in snake_game.game_controller.snake_map.items():
@@ -96,9 +99,10 @@ def test_snake_head_leg_diff():
     assert True
 
 
-def test_ladder_start_end_diff():
-    number_of_snake = 5
-    number_of_ladder = 20
+@pytest.mark.parametrize("num_of_snakes,num_of_ladders", [(30, 8)])
+def test_ladder_start_end_diff(num_of_snakes, num_of_ladders):
+    number_of_snake = num_of_snakes
+    number_of_ladder = num_of_ladders
     snake_game = GameSetup(num_of_ladders=number_of_ladder,
                            num_of_snakes=number_of_snake)
     for key, value in snake_game.game_controller.ladder_map.items():
