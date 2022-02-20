@@ -112,3 +112,27 @@ def test_ladder_start_end_diff(num_of_snakes, num_of_ladders):
             continue
 
     assert True
+
+
+GAME_INPUTS = [
+    [40, 8, 3, 2],
+    [30, 11, 3, 5]
+]
+
+
+@pytest.fixture(params=GAME_INPUTS)
+def set_up_the_game(request):
+    g = GameSetup(
+        num_of_snakes=request.param[0], num_of_ladders=request.param[1])
+    player_list = g.generate_player_list(request.param[2])
+    simulation_count = request.param[3]
+    return g, player_list, simulation_count
+
+
+def test_play_game(set_up_the_game):
+    game_obj, player_list, simulation_count = set_up_the_game
+    for _ in range(0, simulation_count):
+        game_stat = game_obj.start_game(str(uuid4()), deepcopy(player_list))
+        print_json(json.dumps(game_stat.__dict__))
+        print('', end='\n')
+    assert True
