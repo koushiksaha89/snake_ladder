@@ -24,7 +24,7 @@
                 "PYTHONPATH": "${workspaceFolder}"
             },
             "console": "integratedTerminal",
-            "args": ["-s","-v"]
+            "args": ["-s","-v", "--cov-report=term-missing","--cov=snake_ladder"]
         }
     ]
 }

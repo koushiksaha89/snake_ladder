@@ -3,7 +3,9 @@
     "python.testing.pytestArgs": [
         "snake_ladder",
         "-s",
-        "-v"
+        "-v",
+        "--cov-report=term-missing",
+        "--cov=snake_ladder"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
