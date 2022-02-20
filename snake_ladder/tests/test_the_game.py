@@ -115,8 +115,8 @@ def test_ladder_start_end_diff(num_of_snakes, num_of_ladders):
 
 
 GAME_INPUTS = [
-    [40, 8, 3, 2],
-    [30, 11, 3, 5]
+    [15, 8, 3, 4],
+    [17, 7, 3, 3]
 ]
 
 
