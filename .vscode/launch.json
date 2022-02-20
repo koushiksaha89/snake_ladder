@@ -5,17 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "play snake and ladder",
-            "type": "python",
-            "request": "launch",
-            "program": "snake_ladder/tests/test_the_game.py",
-            "console": "integratedTerminal",
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            }
-        },
-        {
-            "name": "Python: pytest",
+            "name": "pytest snake and ladder",
             "type": "python",
             "request": "launch",
             "module": "pytest",
@@ -24,7 +14,7 @@
                 "PYTHONPATH": "${workspaceFolder}"
             },
             "console": "integratedTerminal",
-            "args": ["-s","-v", "--cov-report=term-missing","--cov=snake_ladder"]
+            "args": ["-s","-v","--cov-report=term-missing","--cov=snake_ladder"]
         }
     ]
 }
