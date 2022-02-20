@@ -2,15 +2,20 @@ import json
 from copy import deepcopy
 from uuid import uuid4
 
+import pytest
 from rich import print, print_json
 from snake_ladder.entry.initiate_game import GameSetup
 
 
-def test_the_game():
+@pytest.mark.parametrize("num_of_snakes,num_of_ladders,num_of_players,simulation_count", [(30, 8, 4, 1)])
+def test_the_game(num_of_snakes,
+                  num_of_ladders,
+                  num_of_players,
+                  simulation_count):
     try:
-        g = GameSetup(num_of_snakes=30, num_of_ladders=8)
-        player_list = g.generate_player_list(num_of_players=3)
-        simulation_count = 3
+        g = GameSetup(num_of_snakes=num_of_snakes,
+                      num_of_ladders=num_of_ladders)
+        player_list = g.generate_player_list(num_of_players=num_of_players)
 
         max_amt_slide = 0
         biggest_snake_start = 0
@@ -18,7 +23,7 @@ def test_the_game():
         for snake_start, snake_end in g.game_controller.snake_map.items():
             old_snake_max = max_amt_slide
             max_amt_slide = max(max_amt_slide, (snake_start-snake_end))
-            if old_snake_max!=max_amt_slide:
+            if old_snake_max != max_amt_slide:
                 biggest_snake_start = snake_start
                 biggest_snake_end = snake_end
 
@@ -31,10 +36,12 @@ def test_the_game():
             if old_ladder_max != max_amt_ladder:
                 biggest_ladder_start = ladder_start
                 biggest_ladder_end = ladder_end
-        
-        print(f"max_amt_slide:{max_amt_slide} biggest_snake_start:{biggest_snake_start} biggest_snake_end:{biggest_snake_end}")
-        print(f"max_amt_climb:{max_amt_ladder} biggest_ladder_start:{biggest_ladder_start} biggest_ladder_end:{biggest_ladder_end}")
-        
+
+        print(
+            f"max_amt_climb:{max_amt_ladder} biggest_ladder_start:{biggest_ladder_start} biggest_ladder_end:{biggest_ladder_end}")
+        print(
+            f"max_amt_slide:{max_amt_slide} biggest_snake_start:{biggest_snake_start} biggest_snake_end:{biggest_snake_end}")
+
         for _ in range(0, simulation_count):
             game_stat = g.start_game(str(uuid4()), deepcopy(player_list))
             print_json(json.dumps(game_stat.__dict__))
@@ -56,6 +63,7 @@ def test_snake_ladder_number_assignment():
     else:
         assert False
 
+
 def test_snake_ladder_assignment():
     # no two cell can have snake and ladder
     number_of_snake = 22
@@ -65,19 +73,21 @@ def test_snake_ladder_assignment():
 
     snake_starting_points = set(snake_game.game_controller.snake_map.keys())
     ladder_starting_points = set(snake_game.game_controller.ladder_map.keys())
-    intersection_starting_points = snake_starting_points.intersection(ladder_starting_points)
+    intersection_starting_points = snake_starting_points.intersection(
+        ladder_starting_points)
 
     if len(intersection_starting_points) == 0:
         assert True
     else:
         assert False
 
+
 def test_snake_head_leg_diff():
     number_of_snake = 22
     number_of_ladder = 8
     snake_game = GameSetup(num_of_ladders=number_of_ladder,
                            num_of_snakes=number_of_snake)
-    for key,value in snake_game.game_controller.snake_map.items():
+    for key, value in snake_game.game_controller.snake_map.items():
         if key - value < 0:
             assert False
         else:
@@ -91,10 +101,10 @@ def test_ladder_start_end_diff():
     number_of_ladder = 20
     snake_game = GameSetup(num_of_ladders=number_of_ladder,
                            num_of_snakes=number_of_snake)
-    for key,value in snake_game.game_controller.ladder_map.items():
+    for key, value in snake_game.game_controller.ladder_map.items():
         if key - value > 0:
             assert False
         else:
             continue
 
-    assert True                      
+    assert True
