@@ -12,6 +12,10 @@ class GameController(Board):
 
     def play_game(self, player: Player):
 
+        """
+        this method implements rules of the game play. It also collects few metrics for the each turn for each player and passes it on for stats build up.
+        """
+
         sub_turn = 0
         player_turn_metrics = []
 
@@ -76,6 +80,9 @@ class GameController(Board):
                                   player,
                                   turn_num,
                                   turn_metrics):
+        """
+        this method is responsible for building the stats for a player after a single turn has been completed while playing.
+        """
 
         climb_turn_dict = {turn_num: list()}
         slide_turn_dict = {turn_num: list()}

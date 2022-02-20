@@ -16,6 +16,9 @@ class GameSetup:
                  dice_count=1,
                  board_size=100) -> None:
 
+        """
+        init call for the game setup
+        """
         super().__init__()
         self.game_controller = GameController(board_size)
         self.game_controller.dice_count = dice_count
@@ -26,7 +29,9 @@ class GameSetup:
         self._fake = Faker('en_IN')
 
     def generate_player_list(self, num_of_players):
-
+        """
+        this generates player list for the passed num of players
+        """
         _player_queue = deque()
         for player in range(1, num_of_players+1):
             fake_first_name = self._fake.first_name()
@@ -43,6 +48,10 @@ class GameSetup:
         return _player_queue
 
     def start_game(self, game_id, player_queue):
+
+        """
+        starts the game with game id and a player queue
+        """
 
         if len(player_queue) <= 0:
             raise Exception('Player list is empty')
@@ -71,6 +80,9 @@ class GameSetup:
         return self.get_game_stat(won_player_list, game_id)
 
     def get_player_stat(self, player):
+        """
+        this method gathers player wise stats
+        """
         player_climbs_amts = list(chain.from_iterable(d.items()
                                                       for d in player.climb_amount_history))
         player_climbs_amts = [x[1] for x in player_climbs_amts]
@@ -130,6 +142,9 @@ class GameSetup:
         return player
 
     def get_game_stat(self, player_list, game_id):
+        """
+        this method collects all player individual stats and transform them into game stats
+        """
         gs = GameStats()
         gs.min_number_of_rolls_to_win = min(
             [x.total_number_of_dice_rolls for x in player_list])
