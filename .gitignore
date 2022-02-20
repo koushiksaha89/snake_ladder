@@ -2,3 +2,5 @@
 *.pdf
 links.md
 .coverage
+.coverage*
+venv/
