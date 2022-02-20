@@ -24,7 +24,7 @@
                 "PYTHONPATH": "${workspaceFolder}"
             },
             "console": "integratedTerminal",
-            "args": ["-s"]
+            "args": ["-s","-v"]
         }
     ]
 }

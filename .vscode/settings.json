@@ -2,7 +2,8 @@
     "python.linting.enabled": false,
     "python.testing.pytestArgs": [
         "snake_ladder",
-        "-s"
+        "-s",
+        "-v"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
